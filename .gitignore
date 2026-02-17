@@ -20,6 +20,9 @@ venv/
 *.bak
 *.tmp
 
+*.o
+*.lo
+*.la
 
 .cache/
 
