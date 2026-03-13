@@ -78,10 +78,10 @@ This means:
 
 ---
 
-# Quick Install (using the included DLL)
+# Quick Install (for windows I.e., using the included DLL)
 
 ## 1) Install the module DLL (user modules directory)
-Copy the DLL into:
+Copy the DLL (located in `precompiled/windows/threshold-example.dll`) into:
 
 **Windows user modules folder**
 ```
@@ -99,60 +99,33 @@ C:\Users\rnpla\gwyddion\modules\process\threshold-example.dll
 
 > Note: Some builds may also use `C:\Users\<YOU>\.gwyddion\...`, but on Windows the folder that actually worked here is `C:\Users\<YOU>\gwyddion\...`.
 
-## 2) Create a launcher BAT (so Gwyddion knows which Python to run)
+## 2) Use the launcher BAT
 
-Create a file like:
-```
-
-C:\gwy-python-bridge\run_gwyddion_windows.bat
-
-````
-
-Example (my example is supplied in precompiled\windows) (edit paths for your machine):
+in `precompiled/Windows` there is a file 'run_gwy_py.bat'. save this file to your desktop screen (this is your new gwyddion launcher), and edit lines 4 to be the path to the python executable that runs your script:
 
 ```bat
-@echo off
+set "GWY_PYTHON_EXE=C:\your\path\to\python.exe"
+```
+```bat
+set "GWY_PYTHON_SCRIPT=C:\your\path\to\your\python-script\example-script.py" 
+```
 
-REM Choose the Python you want 
-set "GWY_PYTHON_EXE=C:\Users\rnpla\anaconda3\envs\dat_to_sxm\python.exe"
+You are now done. Double click the bat script just like you would with the gwyddion desktop short cut and your python script will be a module inside **Data Process → STM → Run Python Script**
 
-REM The python script you want to run in gwyddion (name of mine was absurd_process (because it contains a *very* unique process that *is* absurd, just so i could identify that it ran))
-set "GWY_PYTHON_SCRIPT=C:\gwy-python-bridge\src\absurd_process.py"
 
-REM Optional config file (your script can read this each run, of course this could just be skipped and the config.yml hardcoded into the python file. Using a config.yml allows the live tuning of the operation)
-set "GWY_PYTHON_CONFIG=C:\gwy-python-bridge\python\config.yml"
+# Not windows
 
-REM Conda DLLs (numpy/mkl often need these)
-set "PATH=C:\Users\rnpla\anaconda3\envs\dat_to_sxm;C:\Users\rnpla\anaconda3\envs\dat_to_sxm\Library\bin;C:\Users\rnpla\anaconda3\envs\dat_to_sxm\Scripts;%PATH%"
-
-REM Optional: log file for debugging
-set "GWYDDION_LOGFILE=%USERPROFILE%\Desktop\gwyddion.log"
-
-start "" "C:\Program Files\Gwyddion\bin\gwyddion.exe" --new-instance --log-to-file
-````
-
-Run Gwyddion **only via this BAT**.
-
-## 3) Verify it loaded
-
-1. Launch via the BAT
-2. Open any image
-3. Confirm menu exists:
-
-   * **Data Process → STM → Run Python Script**
-4. Alternatively: Module Browser should show the module.
-
----
-
-# Build From Source (MSYS2 MinGW64, Win64)
+I have not compiled for unix based platforms. Hence you will need to compile it yourself, and amend the bat script (to bash) to launch gwyddion with the correct environment variables for your platform. 
+## 1) Build From Source (MSYS2 MinGW64, Win64)
 
 You only need this if:
 
 * the DLL doesn’t load on another machine (dependency mismatch), or
 * you want to modify the C module.
-I Built in **MSYS2 MinGW x64** to produce a Win64 `.dll`, this is what i did: 
 
-(for more details beyond this the README for the template module as written by Gwyddion is included in src. I only rewrote the c-code from the module (and kept the temporary name they used) found in src/threshold-example.c)
+If it helps compilation for unix based systems, this is what i did to compile for windows.
+
+> Note: for more details beyond this the README for the template module as written by Gwyddion is included in src. I only rewrote the c-code from the module (and kept the temporary name they used) found in src/threshold-example.c
 ---
 
 ## 0) Install MSYS2
