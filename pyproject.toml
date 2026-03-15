@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gwy-python-bridge"
+version = "0.1.0"
+description = "Python helper scripts for the Gwyddion Python bridge module."
+authors = [
+  { name = "rohanplatts" }
+]
+
+requires-python = ">=3.10"
+
+dependencies = [
+  "numpy",
+  "matplotlib",
+  "Pillow",
+  "scipy",
+  "scikit-image",
+  "scikit-learn",
+]
